@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TreePO: A New Approach for Efficient RL in LLMs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #0173B2; /* Seaborn Colorblind Blue */
+            font-weight: 700;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+        .authors {
+            text-align: center;
+            margin-bottom: 1em;
+            color: #555;
+            line-height: 1.5;
+        }
+        .affiliations {
+            text-align: center;
+            font-size: 0.9em;
+            color: #777;
+            margin-bottom: 2em;
+        }
+        .links {
+            text-align: center;
+            margin-bottom: 2em;
+        }
+        .links a {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #029E73; /* Seaborn Colorblind Green */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .links a:hover {
+            background-color: #0173B2;
+        }
+        .teaser-gallery, .figure-grid, .single-figure, .efficiency-gallery {
+            width: 80%;
+            margin: 2em auto;
+        }
+        .teaser-gallery, .efficiency-gallery {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+        .teaser-figure {
+            text-align: center;
+            flex: 1;
+        }
+        .teaser-figure img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        .caption {
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 0.5em;
+            text-align: center;
+        }
+        .section {
+            margin-bottom: 2.5em;
+        }
+        .abstract {
+            background-color: #eef6f9;
+            border-left: 5px solid #0173B2;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .highlight-green {
+            color: #029E73;
+            font-weight: bold;
+        }
+        .code-block {
+            background-color: #2d2d2d;
+            color: #f1f1f1;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+        }
+        .figure-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .figure-grid img, .single-figure img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>TreePO: Bridging the Gap of Policy Optimization and Efficacy and Inference Efficiency with Heuristic Tree-based Modeling</h1>
+        <div class="authors">
+            Yizhi Li<sup>1,3*</sup>, Qingshui Gu<sup>1*</sup>, Zhoufutu Wen<sup>2*</sup>, Ziniu Li<sup>2</sup>, Tianshun Xing<sup>1</sup>, Shuyue Guo<sup>1</sup>, Tianyu Zheng<sup>1</sup>, Xin Zhou<sup>2</sup>, Xingwei Qu<sup>1,2,3</sup>, Wangchunshu Zhou<sup>1</sup>, Zheng Zhang<sup>2</sup>, Wei Shen<sup>2</sup>, Qian Liu<sup>1</sup>, Chenghua Lin<sup>3&#9826;</sup>, Jian Yang<sup>1&#9826;</sup>, Ge Zhang<sup>1,2&#9826;</sup>, Wenhao Huang<sup>2</sup>
+        </div>
+        <div class="affiliations">
+            <sup>1</sup>M-A-P &nbsp;&nbsp;
+            <sup>2</sup>Bytedance Seed &nbsp;&nbsp;
+            <sup>3</sup>The University of Manchester <br>
+            <sup>*</sup>Equal contribution &nbsp;&nbsp;
+            <sup>&#9826;</sup>Corresponding Author
+        </div>
+        <div class="links">
+            <a href="https://m-a-p.ai/TreePO" target="_blank">Project Website</a>
+            <a href="assets/TreePO.pdf" target="_blank">Read the Paper</a>
+        </div>
+    </header>
+
+    <div class="teaser-gallery">
+        <div class="teaser-figure">
+            <img src="assets/teaser_1.png" alt="AIME Benchmark Performance">
+        </div>
+        <div class="teaser-figure">
+            <img src="assets/teaser_2.png" alt="MATH Benchmark Performance">
+        </div>
+        <div class="teaser-figure">
+            <img src="assets/teaser_3.png" alt="TreePO Sampling vs. Standard Sampling">
+        </div>
+    </div>
+    <p class="caption">Demonstration of the Validation Performance Curves along Training based on Qwen2.5-7B (Left, Mid) and Demonstration of TreePO Sampling (Right).</p>
+
+
+    <section class="abstract section">
+        <h2>TL;DR</h2>
+        <p>Standard reinforcement learning methods for LLMs are inefficient, wasting compute by generating many independent reasoning paths from scratch. We propose <strong>TreePO</strong>, a new method that organizes generation into a tree structure. This allows for sharing common reasoning steps (like a shared trunk and branches), which makes the process much faster and more stable. Our method saves up to <strong>43% of GPU time</strong> while achieving state-of-the-art performance on reasoning benchmarks.</p>
+    </section>
+
+    <section class="section">
+        <h2>The Problem: Wasted Effort in Reasoning</h2>
+        <p>When using reinforcement learning to teach LLMs how to reason, a common strategy is to generate multiple possible solutions for a single problem and reward the good ones. However, this is like asking 16 different people to solve a math problem, and finding out they all started by writing down the same first few steps. It's redundant and inefficient. Each of these independent solutions (or "trajectories") re-computes the same initial reasoning steps, wasting valuable GPU time and memory.</p>
+        <div class="single-figure">
+            <img src="assets/case_study.png" alt="Case study showing shared reasoning paths">
+            <p class="caption">Multiple sampled trajectories from the same prompt, with shared reasoning segments highlighted in matching colors. Despite stochastic generation, key problem-solving steps are consistently reproduced.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Our Solution: Thinking in Trees</h2>
+        <p><strong>TreePO</strong> introduces a smarter way to explore the solution space. Instead of independent paths, we grow a single tree of possibilities. The model generates a segment of text, and then can "branch" off, creating multiple continuations. This has two major benefits:</p>
+        <ul>
+            <li><strong>Efficiency:</strong> The computation for the shared parts of the reasoning path (the trunk of the tree) is done only once. This significantly speeds up the process.</li>
+            <li><strong>Smarter Exploration:</strong> We can be more strategic about where to allocate our computational budget. We can encourage the model to explore more diverse paths or focus on more promising ones using heuristics.</li>
+        </ul>
+        <div class="single-figure">
+            <img src="assets/fig_tree_advantage.png" alt="TreePO Advantage Estimation">
+            <p class="caption">Demonstration of the TreePO Advantage Estimation, which calculates rewards based on sub-groups of trajectories within the tree.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>The Payoff: Better, Faster, Cheaper</h2>
+        <p>Our experiments show that TreePO is not just a theoretical improvement. It delivers concrete benefits.</p>
+        <h3>State-of-the-Art Performance</h3>
+        <p>TreePO achieves top results on several challenging math and reasoning benchmarks.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>AIME</th>
+                    <th>AMC</th>
+                    <th>MATH</th>
+                    <th>Overall</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>GRPO (Baseline)</td>
+                    <td>17.13%</td>
+                    <td>44.42%</td>
+                    <td>72.89%</td>
+                    <td>46.63%</td>
+                </tr>
+                <tr>
+                    <td><strong>TreePO (Ours)</strong></td>
+                    <td><strong>27.83%</strong></td>
+                    <td><strong>55.53%</strong></td>
+                    <td><strong>85.34%</strong></td>
+                    <td><strong>58.21%</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Massive Efficiency Gains</h3>
+        <p>This is where TreePO truly shines. By avoiding redundant computations, we see significant reductions in the GPU hours required for training, making the whole process more scalable and accessible.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Sampling Method</th>
+                    <th>Overall Accuracy &uarr;</th>
+                    <th>GPU Hours &darr;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="2">TreePO w/ More Init Divergence</td>
+                    <td>Sequential</td>
+                    <td>58.21%</td>
+                    <td>6.40</td>
+                </tr>
+                <tr>
+                    <td><strong>Tree-based (b=2)</strong></td>
+                    <td>54.67%</td>
+                    <td><span class="highlight-green">3.65 (&darr;43%)</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="section">
+        <h2>Efficiency Analysis: A Deeper Look</h2>
+        <p>We benchmarked the throughput of TreePO against conventional sampling. On average, our tree-based sampling yields a <strong>+40% increase in trajectories per second</strong> and a <strong>+30% increase in tokens per second</strong> across three different models. The optimal configuration, however, depends on the model and the task.</p>
+        
+        <h3>Finding the Sweet Spot: Depth vs. Segment Length</h3>
+        <p>Efficiency peaks at an intermediate trade-off between tree depth and segment length. Shorter segments allow for more branching and parallelism, but increase computational overhead. Longer segments are better for prefilling, but limit the tree's depth. The ideal balance is model-specific.</p>
+        <div class="efficiency-gallery">
+            <div class="teaser-figure"><img src="assets/base_ins_comparison_efficiency.png" alt="Efficiency vs. Depth for Qwen-Instruct"><p class="caption">Qwen-Instruct</p></div>
+            <div class="teaser-figure"><img src="assets/math_ins_comparison_efficiency.png" alt="Efficiency vs. Depth for Qwen-Math-Instruct"><p class="caption">Qwen-Math-Instruct</p></div>
+            <div class="teaser-figure"><img src="assets/math_comparison_efficiency.png" alt="Efficiency vs. Depth for Qwen-Math"><p class="caption">Qwen-Math</p></div>
+        </div>
+        <p class="caption">Performance comparison across different tree depths.</p>
+
+        <h3>Scaling with More Rollouts</h3>
+        <p>For instruction-tuned models, throughput increases almost linearly as we generate more rollouts (solutions) per prompt. For base models, throughput peaks and then declines, as the increased diversity of solutions leads to less sharing of the computational path.</p>
+        <div class="efficiency-gallery">
+            <div class="teaser-figure"><img src="assets/base_ins_efficiency.png" alt="Efficiency vs. Rollouts for Qwen-Instruct"><p class="caption">Qwen-Instruct</p></div>
+            <div class="teaser-figure"><img src="assets/math_ins_efficiency.png" alt="Efficiency vs. Rollouts for Qwen-Math-Instruct"><p class="caption">Qwen-Math-Instruct</p></div>
+            <div class="teaser-figure"><img src="assets/math_efficiency.png" alt="Efficiency vs. Rollouts for Qwen-Math"><p class="caption">Qwen-Math</p></div>
+        </div>
+        <p class="caption">Performance comparison across different numbers of rollouts.</p>
+    </section>
+
+    <section class="section">
+        <h2>Further Analysis</h2>
+        <h3>How Should We Calculate Rewards in a Tree?</h3>
+        <p>We explored several ways to calculate the reward signal (the "advantage"). The plots below show that a simple averaging of rewards across different subgroups in the tree works best. More complex weighting schemes or filtering out certain subgroups can actually hurt performance by creating a biased signal.</p>
+        <div class="figure-grid">
+            <img src="assets/fig_adv_1.png" alt="Advantage Analysis 1">
+            <img src="assets/fig_adv_2.png" alt="Advantage Analysis 2">
+            <img src="assets/fig_adv_3.png" alt="Advantage Analysis 3">
+            <img src="assets/fig_adv_4.png" alt="Advantage Analysis 4">
+        </div>
+
+        <h3>How Deep Should the Tree Be?</h3>
+        <p>How should we slice up the generation? Should the tree be deep with short text segments, or shallow with long segments? We tested various combinations and found a sweet spot. A moderately deep tree with 512-token segments (14x512) gave the best results, while very long segments underperformed. This suggests that giving the model more frequent opportunities to branch is beneficial.</p>
+        <div class="figure-grid">
+            <img src="assets/fig_depth_1.png" alt="Depth Analysis 1">
+            <img src="assets/fig_depth_2.png" alt="Depth Analysis 2">
+            <img src="assets/fig_depth_3.png" alt="Depth Analysis 3">
+            <img src="assets/fig_depth_4.png" alt="Depth Analysis 4">
+        </div>
+
+        <h3>Is More Exploration Always Better?</h3>
+        <p>Can we guide the search using the model's own confidence? We tested a heuristic where we gave more computational budget to less likely paths to encourage exploration. The results show this is a bad idea. Forcing the model down low-probability paths leads to longer, less coherent answers and worse performance. A balanced exploration strategy is more effective.</p>
+        <div class="figure-grid">
+            <img src="assets/fig_logprob_1.png" alt="Logprob Analysis 1">
+            <img src="assets/fig_logprob_2.png" alt="Logprob Analysis 2">
+            <img src="assets/fig_logprob_3.png" alt="Logprob Analysis 3">
+            <img src="assets/fig_logprob_4.png" alt="Logprob Analysis 4">
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Citation</h2>
+        <p>If you find this work useful, please consider citing the paper:</p>
+        <div class="code-block">
+@misc{Li2025TreePO,
+    author = {Yizhi Li and Qingshui Gu and Zhoufutu Wen and Ziniu Li and Tianshun Xing and Shuyue Guo and Tianyu Zheng and Xin Zhou and Xingwei Qu and Wangchunshu Zhou and Zheng Zhang and Wei Shen and Qian Liu and Chenghua Lin and Jian Yang and Ge Zhang and Wenhao Huang},
+    title  = {TreePO: Bridging the Gap of Policy Optimization and Efficacy and Inference Efficiency with Heuristic Tree-based Modeling},
+    year   = {2025},
+    howpublished = {\url{https://m-a-p.ai/TreePO}}
+}
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>
