@@ -49,11 +49,11 @@
         }
         .links a {
             display: inline-block;
-            padding: 12px 24px;
-            background-color: #029E73; /* Seaborn Colorblind Green */
+            padding: 8px 18px;
+            background-color: #568F87; /* Seaborn Colorblind Green */
             color: white;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 8px;
             margin: 5px;
             font-weight: bold;
             transition: background-color 0.3s ease;
@@ -115,7 +115,7 @@
             font-weight: bold;
         }
         .code-block {
-            background-color: #2d2d2d;
+            background-color: #819A91;
             color: #f1f1f1;
             padding: 20px;
             border-radius: 8px;
@@ -150,12 +150,18 @@
             <sup>*</sup>Equal contribution &nbsp;&nbsp;
             <sup>&#9826;</sup>Corresponding Author
         </div>
+    
+        
         <div class="links">
-            <a href="https://m-a-p.ai/TreePO" target="_blank">Project Website</a>
-            <a href="assets/TreePO.pdf" target="_blank">Read the Paper</a>
+            <a href="https://huggingface.co/collections/m-a-p/treepo-68ad9a7c078e83cb49cd9b2d" target="_blank">🤗 Checkpoints & Data</a>
+            <a href="https://arxiv.org/abs/2508.17445" target="_blank">📄 Read the Paper</a>
+            <a href="https://github.com/multimodal-art-projection/TreePO" target="_blank">👾 Repository</a>
         </div>
     </header>
-
+    
+    <section class="abstract section">
+    <h2>TL;DR</h2>
+    <p>Standard reinforcement learning methods for LLMs are inefficient, wasting compute by generating many independent reasoning paths from scratch. We propose <strong>TreePO</strong>, a new method that organizes generation into a tree structure. This allows for sharing common reasoning steps (like a shared trunk and branches), which makes the process much faster and more stable. Our method saves up to <strong>43% of GPU time</strong> while achieving state-of-the-art performance on reasoning benchmarks.</p>
     <div class="teaser-gallery">
         <div class="teaser-figure">
             <img src="assets/teaser_1.png" alt="AIME Benchmark Performance">
@@ -168,12 +174,10 @@
         </div>
     </div>
     <p class="caption">Demonstration of the Validation Performance Curves along Training based on Qwen2.5-7B (Left, Mid) and Demonstration of TreePO Sampling (Right).</p>
-
-
-    <section class="abstract section">
-        <h2>TL;DR</h2>
-        <p>Standard reinforcement learning methods for LLMs are inefficient, wasting compute by generating many independent reasoning paths from scratch. We propose <strong>TreePO</strong>, a new method that organizes generation into a tree structure. This allows for sharing common reasoning steps (like a shared trunk and branches), which makes the process much faster and more stable. Our method saves up to <strong>43% of GPU time</strong> while achieving state-of-the-art performance on reasoning benchmarks.</p>
     </section>
+
+
+
 
     <section class="section">
         <h2>The Problem: Wasted Effort in Reasoning</h2>
@@ -314,12 +318,16 @@
         <h2>Citation</h2>
         <p>If you find this work useful, please consider citing the paper:</p>
         <div class="code-block">
-@misc{Li2025TreePO,
-    author = {Yizhi Li and Qingshui Gu and Zhoufutu Wen and Ziniu Li and Tianshun Xing and Shuyue Guo and Tianyu Zheng and Xin Zhou and Xingwei Qu and Wangchunshu Zhou and Zheng Zhang and Wei Shen and Qian Liu and Chenghua Lin and Jian Yang and Ge Zhang and Wenhao Huang},
-    title  = {TreePO: Bridging the Gap of Policy Optimization and Efficacy and Inference Efficiency with Heuristic Tree-based Modeling},
-    year   = {2025},
-    howpublished = {\url{https://m-a-p.ai/TreePO}}
-}
+        @misc{li2025treepo,
+            title={TreePO: Bridging the Gap of Policy Optimization and Efficacy and Inference Efficiency with Heuristic Tree-based Modeling}, 
+            author={Yizhi Li and Qingshui Gu and Zhoufutu Wen and Ziniu Li and Tianshun Xing and Shuyue Guo and Tianyu Zheng and Xin Zhou and Xingwei Qu and Wangchunshu Zhou and Zheng Zhang and Wei Shen and Qian Liu and Chenghua Lin and Jian Yang and Ge Zhang and Wenhao Huang},
+            year={2025},
+            eprint={2508.17445},
+            archivePrefix={arXiv},
+            primaryClass={cs.LG},
+            url={https://arxiv.org/abs/2508.17445}, 
+            howpublished = {\url{https://m-a-p.ai/TreePO}}
+        }
         </div>
     </section>
 
