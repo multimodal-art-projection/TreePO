@@ -1,0 +1,18 @@
+working_dir: ./
+excludes: ["/.git/", "/data/", '/logs/', '/ray_temp/', '/wandb/', '/training_records/', '/training_checkpoint/', '/saves/', '/checkpoints/', '/ckpts/', '/ossutil_output/', "/*.log", "/.vscode/"]
+conda: "/map-vepfs/yizhi/envs/verl_raw"
+env_vars:
+  TORCH_NCCL_AVOID_RECORD_STREAMS: "1"
+  VLLM_USE_V1: "0"
+  VLLM_ATTENTION_BACKEND: "XFORMERS"
+  # VLLM_USE_V1: "1"
+  WANDB_API_KEY: "0b7fc0a5d4a4d19ef6bc03456f409d52eaf87b42"
+  # If you are using vllm<=0.6.3, you might need to set the following environment variable to avoid bugs:
+  WANDB_RESUME: "allow"
+  # WANDB_RUN_ID: "hhsohk34"
+  # RAY_DEBUG_POST_MORTEM: "1"
+  WANDB_MODE: "offline"
+  # https_proxy : http://100.64.117.161:3128
+  # http_proxy: http://100.64.117.161:3128
+  WANDB_DIR: "/map-vepfs/yizhi/logs/"
+  VERL_LOGGING_LEVEL: "INFO"
