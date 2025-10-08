@@ -13,6 +13,8 @@ We release the resources at [TreePO collection on huggingface](https://huggingfa
 
 Follow the instruction at [recipe/treepo/README.md](./recipe/treepo/README.md) for installation and adaption of the algorithm to your `verl`.
 
+Note that TreePO was developed with `verl@0.3.1.dev` and `vllm@0.8.5`.
+
 Download the training and evaluation data:
 
 ```bash
